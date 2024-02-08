@@ -1,0 +1,15 @@
+# sudo cp attend.service /etc/systemd/system/attend.service
+[Unit]
+Description=Attend Docker Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+ExecStartPre=/usr/bin/docker start attendcontainer
+ExecStart=/usr/bin/docker run --net=host --privileged --name attendcontainer -d jjaegii/attend_machine:0.3
+ExecStop=
+ExecStopPost=
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
